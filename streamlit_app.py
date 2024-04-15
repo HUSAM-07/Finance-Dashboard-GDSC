@@ -1,14 +1,12 @@
 import streamlit as st
-from st_gsheets import Connection
+from streamlit_gsheets import GSheetsConnection
 
 # Read Google Sheets URL from secrets.toml
 gsheets_url = st.secrets["connections"]["gsheets"]["spreadsheet"]
 
-# Connect to Google Sheets
-conn = Connection(gsheets_url)
+conn = st.connection("gsheets", type=GSheetsConnection)
 
-# Load data from Google Sheets
-data = conn.sheets[0].get_all_records()
+data = conn.read()
 
 # Function to filter data based on user input
 def filter_data(data, filters):
